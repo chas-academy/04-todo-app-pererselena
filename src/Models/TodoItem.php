@@ -16,9 +16,9 @@ class TodoItem extends Model
             VALUES (:title, :created, :completed)";
 
             self::$db->query($query);
-            self::$db->bind(':title',  $title);
-            self::$db->bind(':created',  date("Y/m/d"));
-            self::$db->bind(':completed',  'false');
+            self::$db->bind(':title', $title);
+            self::$db->bind(':created', date("Y/m/d"));
+            self::$db->bind(':completed', 'false');
 
             $result = self::$db->execute();
 
@@ -32,11 +32,36 @@ class TodoItem extends Model
         }
     }
 
-    // // public static function updateTodo($todoId, $title, $completed = null)
-    // // {
-    // //     // TODO: Implement me!
-    // //     // Update a specific todo
-    // // }
+    public static function updateTodo($todoId, $title, $completed = null)
+    {
+        if ($completed==1) {
+            $state = "true";
+        } else {
+            $state = "false";
+        }
+        try {
+        $query = "UPDATE todos SET title = :title, completed = :completed
+            WHERE id = :id";
+
+            self::$db->query($query);
+            self::$db->bind(':title', $title);
+            self::$db->bind(':id', $todoId);
+            self::$db->bind(':completed', $state);
+
+            $result = self::$db->execute();
+
+            if (!empty($result)) {
+                return $result;
+            } else {
+                throw new \Exception("Error occured when trying to create todo.");
+            }
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
+        // TODO: Implement me!
+        // Update a specific todo
+        
+    }
 
     public static function deleteTodo($todoId)
     {
