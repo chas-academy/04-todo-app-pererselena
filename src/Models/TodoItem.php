@@ -8,7 +8,28 @@ class TodoItem extends Model
 
     public static function createTodo($title)
     {
+        if (!isset($title)) {
+            throw new \Exception("Parameters are required");
+        }
+        try {
+        $query = "INSERT INTO todos (title, created, completed)
+            VALUES (:title, :created, :completed)";
 
+            self::$db->query($query);
+            self::$db->bind(':title',  $title);
+            self::$db->bind(':created',  date("Y/m/d"));
+            self::$db->bind(':completed',  'false');
+
+            $result = self::$db->execute();
+
+            if (!empty($result)) {
+                return $result;
+            } else {
+                throw new \Exception("Error occured when trying to create todo.");
+            }
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
     }
 
     // // public static function updateTodo($todoId, $title, $completed = null)
