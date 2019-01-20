@@ -1,6 +1,6 @@
 <?php
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
-define('DB_NAME', 'todo-app-db'); // Change this depending if you use docker or vagrant
+define('DB_HOST', 'my06b.sqlserver.se');
+define('DB_USER', '235259_bb82745');
+define('DB_PASS', 'kurtsunesmedberit');
+define('DB_NAME', '235259-todo-app-db'); // Change this depending if you use docker or vagrant
